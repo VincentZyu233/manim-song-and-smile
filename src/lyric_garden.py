@@ -59,6 +59,7 @@ HUD_BAR_HEIGHT = .09
 BOTTOM_WAVE = -6.15     # centre of the whole song envelope below the top visualisation
 BOTTOM_WAVE_HEIGHT = .9
 BUCKET_FALL = 1.4       # per second fall back of a spectrum bucket
+BUCKET_MIN_HEIGHT = .02  # never collapse a bucket: a zero height breaks the next rescale
 BUCKET_PEAK_FALL = .22  # per second fall of the peak-hold cap, so the caps keep drifting
 BUCKET_CAP_HEIGHT = .07
 BOTTOM_MODE = os.environ.get("LYRIC_GARDEN_BOTTOM", "static")
@@ -139,6 +140,7 @@ class LyricGarden(Scene):
         def bounce(_: VGroup) -> None:
             row = min(int(self.elapsed() * asset["rate"]), len(levels) - 1)
             heights[:] = np.maximum(levels[row] * HUD_TOP_HEIGHT, heights - BUCKET_FALL / config.frame_rate)
+            np.maximum(heights, BUCKET_MIN_HEIGHT, out=heights)
             for bucket, centre, height in zip(buckets, centres, heights):
                 bucket.stretch_to_fit_height(float(height))
                 bucket.move_to([centre, floor + float(height) / 2, 0])
