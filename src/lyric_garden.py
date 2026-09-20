@@ -76,6 +76,10 @@ def load_asset(path: Path) -> dict:
 
 class LyricGarden(Scene):
     def setup(self) -> None:
+        # The head-up display is added as one VGroup, so its updaters sit on
+        # descendants and Manim's static-wait optimisation cannot see them. This
+        # must be set on the instance: Scene.__init__ assigns its own default.
+        self.always_update_mobjects = True
         self.timeline = json.loads(TIMELINE_PATH.read_text(encoding="utf-8"))
         self.limit = min(self.timeline["duration"], MAX_TIME) if MAX_TIME else self.timeline["duration"]
         self.clock = 0.0
@@ -165,7 +169,7 @@ class LyricGarden(Scene):
             if reached > 1 and reached != state["reached"]:
                 state["reached"] = reached
                 played.become(envelope(0, reached, PALETTE["song"], .8))
-        VGroup(full, played).add_updater(reveal)
+        played.add_updater(reveal)
         return VGroup(full, played, self.playhead(centre, height), self.level_dot(asset, centre, height))
 
     def level_dot(self, asset: dict, centre: float, height: float) -> Dot:
