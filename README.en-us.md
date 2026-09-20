@@ -57,7 +57,7 @@ uv run python scripts/extract_audio.py
 ```
 
 `assets/audio/waveform.json` holds the min/max envelope of the whole song (100 points per second) and
-`assets/audio/spectrum.json` holds a per-frame 32 band spectrum (30 frames per second, base64 uint8). Re-run it after the audio changes.
+`assets/audio/spectrum.json` holds a per-frame 32 band spectrum (60 frames per second, base64 uint8). Re-run it after the audio changes.
 
 ## 🎞️ Render
 
@@ -70,9 +70,9 @@ uv run python scripts/render.py --quality final --path "<LXGWWenKai-Medium.ttf>"
 uv run python scripts/validate.py output/song-and-smile.mp4
 ```
 
-`--waveform` picks the top visualisation: `bars` (a real spectrum that jumps with the music), `static` (whole song
-envelope with progressive colouring) or `scroll` (scrolling envelope). A preview is intentionally cut to the requested
-number of seconds; `final` renders the full 161-second scene and uses FFmpeg to mux the original MP3 with the video.
+`--waveform` picks the top visualisation (`bars` reacting spectrum / `static` whole song envelope / `scroll` scrolling
+envelope), `--bottom` adds the whole song envelope above the progress bar and `--fps` sets the frame rate (default 60).
+A preview is cut to the requested seconds; `final` renders the full 161-second scene and muxes the original MP3.
 
 ## 🎨 Design rules
 
@@ -85,8 +85,8 @@ Lyrics are warm white by default. Stable semantic colors make ending words part 
 
 Titles and lyric phrases are drawn with `Write`; the bottom plant line art stays removed and the closing smile arc keeps `Create`.
 
-The top is a real spectrum or envelope visualisation that reacts with the music, the bottom is a progress bar with a `m:ss.d / total` clock, and both read the render clock so they stay in sync for the whole video.
-The closing title and smile arc fade out over `OUTRO_FADE` (3 s), ending on the last frame.
+The top is a reacting spectrum or envelope visualisation; below it sit the whole song envelope, the progress bar and a `m:ss.d / total` clock, and all of them read the render clock so they stay in sync for the whole video.
+The closing title and smile arc fade out over `OUTRO_FADE` (3 s) and stop on the last frame.
 
 A phrase head starts drawing `LEAD_IN` (0.30 s) before its cue start and the outgoing phrase has already
 finished fading out, so a line no longer waits for the previous fade. A colored ending word starts drawing

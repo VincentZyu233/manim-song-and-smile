@@ -32,6 +32,8 @@ def main() -> None:
     parser.add_argument("--quality", choices=("preview", "final"), default="preview")
     parser.add_argument("--duration", type=float, help="Limit a preview to this many seconds.")
     parser.add_argument("--waveform", choices=("bars", "static", "scroll"), default="bars", help="Top visualisation: reacting spectrum bars, static envelope or scrolling envelope.")
+    parser.add_argument("--bottom", choices=("static", "none"), default="static", help="Add the whole song envelope above the progress bar.")
+    parser.add_argument("--fps", type=int, default=60, help="Frame rate of the render.")
     parser.add_argument('--path', type=Path, required=True, help='LXGW WenKai TTF file')
     parser.add_argument('--work', type=Path, required=True, help='Temporary render directory')
     parser.add_argument("--output", type=Path)
@@ -53,7 +55,7 @@ def main() -> None:
     media = args.work.resolve() / 'manim' / args.quality
     output = args.output or ROOT / "output" / ("song-and-smile-preview.mp4" if duration else "song-and-smile.mp4")
     output.parent.mkdir(parents=True, exist_ok=True)
-    env = os.environ | {'LYRIC_GARDEN_FONT_PATH': str(args.path.resolve()), 'LYRIC_GARDEN_DURATION': str(duration or 0), 'LYRIC_GARDEN_WAVEFORM': args.waveform, 'LYRIC_GARDEN_WIDTH': '540' if args.quality == 'preview' else '1080', 'LYRIC_GARDEN_HEIGHT': '960' if args.quality == 'preview' else '1920'}
+    env = os.environ | {'LYRIC_GARDEN_FONT_PATH': str(args.path.resolve()), 'LYRIC_GARDEN_DURATION': str(duration or 0), 'LYRIC_GARDEN_WAVEFORM': args.waveform, 'LYRIC_GARDEN_BOTTOM': args.bottom, 'LYRIC_GARDEN_FPS': str(args.fps), 'LYRIC_GARDEN_WIDTH': '540' if args.quality == 'preview' else '1080', 'LYRIC_GARDEN_HEIGHT': '960' if args.quality == 'preview' else '1920'}
     if duration:
         env["LYRIC_GARDEN_DURATION"] = str(duration)
     quality_flag = "-ql" if args.quality == "preview" else "-qh"

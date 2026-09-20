@@ -57,7 +57,7 @@ uv run python scripts/extract_audio.py
 ```
 
 `assets/audio/waveform.json` 是整首歌的 min/max 包络（100 点/秒）；`assets/audio/spectrum.json`
-是逐帧 32 频段频谱（30 帧/秒，base64 uint8）。音频更新后需要重跑一次。
+是逐帧 32 频段频谱（60 帧/秒，base64 uint8，与默认渲染帧率一致）。音频更新后需要重跑一次。
 
 ## 🎞️ 渲染
 
@@ -70,9 +70,9 @@ uv run python scripts/render.py --quality final --path "<LXGWWenKai-Medium.ttf>"
 uv run python scripts/validate.py output/song-and-smile.mp4
 ```
 
-用 `--waveform` 选择顶部可视化：`bars`（随响度跳动的真实频谱柱）、`static`（整曲包络 + 进度染色）、
-`scroll`（滚动波形）。预览会有意截断到指定秒数；`final` 渲染完整的 161 秒场景，并用 FFmpeg 把
-原始 MP3 与画面合流。
+用 `--waveform` 选择顶部可视化（`bars` 跳动频谱柱 / `static` 整曲包络 + 进度染色 / `scroll` 滚动波形），
+`--bottom` 在进度条上方再加一条整曲包络，`--fps` 指定帧率（默认 60）。预览会截断到指定秒数；
+`final` 渲染完整的 161 秒场景，并用 FFmpeg 把原始 MP3 与画面合流。
 
 ## 🎨 设计规则
 
@@ -85,8 +85,8 @@ uv run python scripts/validate.py output/song-and-smile.mp4
 
 标题与歌词都用 `Write` 书写；底部植物线稿不再恢复，片尾微笑弧线保留 `Create`。
 
-顶部是随音乐跳动的真实频谱柱（或包络波形），底部是进度条与 `分:秒.十分位 / 总时长` 时钟；
-两者都读渲染时钟，因此贯穿全片与画面严格同步。片尾标题与微笑弧线在最后 `OUTRO_FADE`（3 s）内淡出。
+顶部是随音乐跳动的真实频谱柱（或包络波形），其下是整曲包络、进度条与 `分:秒.十分位 / 总时长` 时钟；
+它们都读渲染时钟，贯穿全片与画面严格同步。片尾标题与微笑弧线在最后 `OUTRO_FADE`（3 s）内淡出，停在最后一帧。
 
 每句句首在 cue 时间前 `LEAD_IN`（0.30 s）起笔，上一句的淡出在此之前结束，因此不再
 等待前一句淡出。染色词在记录的 `keyword_start` 前 `KEYWORD_LEAD`（1 s）起笔，但仍在

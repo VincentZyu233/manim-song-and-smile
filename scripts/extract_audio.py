@@ -69,7 +69,7 @@ def main() -> None:
     parser.add_argument("--audio", type=Path, default=DEFAULT_AUDIO)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--waveform-rate", type=float, default=100.0, help="Envelope points per second.")
-    parser.add_argument("--spectrum-rate", type=float, default=30.0, help="Spectrum frames per second; match the video frame rate.")
+    parser.add_argument("--spectrum-rate", type=float, default=60.0, help="Spectrum frames per second; match the video frame rate.")
     parser.add_argument("--bands", type=int, default=32)
     parser.add_argument("--window", type=int, default=2048, help="FFT window in samples.")
     parser.add_argument("--sample-rate", type=int, default=44100)
