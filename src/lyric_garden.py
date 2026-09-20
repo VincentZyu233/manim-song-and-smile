@@ -175,6 +175,13 @@ class LyricGarden(Scene):
         head.add_updater(track)
         return head
 
+    def clock_group(self, sprites: dict[str, Text], text: str) -> VGroup:
+        """Assemble the clock from pre-rendered glyph sprites instead of new Text objects."""
+        elapsed, total = text.split(" / ")
+        def pieces(value: str) -> VGroup:
+            return VGroup(*[sprites[character].copy() for character in value]).arrange(buff=.04)
+        return VGroup(pieces(elapsed), sprites[" / "].copy(), pieces(total)).arrange(buff=.12)
+
     def progress_bar(self) -> VGroup:
         track = Rectangle(width=HUD_WIDTH, height=HUD_BAR_HEIGHT, stroke_width=0, fill_color="#223242", fill_opacity=1).move_to([0, HUD_BOTTOM, 0])
         fill = Rectangle(width=.02, height=HUD_BAR_HEIGHT, stroke_width=0, fill_color=PALETTE["home"], fill_opacity=1).move_to([-HUD_WIDTH / 2 + .01, HUD_BOTTOM, 0])
@@ -185,12 +192,14 @@ class LyricGarden(Scene):
             fill.move_to([-HUD_WIDTH / 2 + width / 2, HUD_BOTTOM, 0])
             head.move_to([-HUD_WIDTH / 2 + width, HUD_BOTTOM, 0])
         fill.add_updater(grow)
-        clock = Text(self.stamp(0.0), font=FONT, font_size=26, color="#9CAEBB").move_to([0, HUD_BOTTOM - .40, 0])
-        def tick(mobject: Text) -> None:
+        sprites = {character: Text(character, font=FONT, font_size=26, color="#9CAEBB") for character in "0123456789:."}
+        sprites[" / "] = Text(" / ", font=FONT, font_size=26, color="#9CAEBB")
+        clock = self.clock_group(sprites, self.stamp(0.0)).move_to([0, HUD_BOTTOM - .40, 0])
+        def tick(mobject: VGroup) -> None:
             stamp = self.stamp(self.elapsed())
             if stamp != self.hud_stamp:
                 self.hud_stamp = stamp
-                mobject.become(Text(stamp, font=FONT, font_size=26, color="#9CAEBB").move_to(mobject.get_center()))
+                mobject.become(self.clock_group(sprites, stamp).move_to(mobject.get_center()))
         clock.add_updater(tick)
         return VGroup(track, fill, head, clock)
 
