@@ -86,3 +86,9 @@ its recorded `keyword_start` but still finishes at
 pen stroke is visible instead of snapping on at the sung syllable, without
 changing when the word is complete. These are animation pre-rolls only: the
 timeline still decides when every cue may start.
+
+## License
+
+Source code is released under the [MIT license](LICENSE). The included music,
+lyrics and any rendered video are **not** covered by MIT; their rights are
+described separately in [ASSET_NOTICE.md](ASSET_NOTICE.md).
