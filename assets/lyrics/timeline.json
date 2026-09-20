@@ -1,0 +1,323 @@
+{
+  "version": 1,
+  "audio": "music/歌声与微笑.mp3",
+  "duration": 161.0,
+  "metadata": {
+    "title": "歌声与微笑",
+    "artist": "新月合唱团",
+    "lyricist": "王健",
+    "composer": "谷建芬"
+  },
+  "intro_end": 20.08,
+  "outro_start": 145.23,
+  "cues": [
+    {
+      "id": "line_01",
+      "text": "请把我的歌带回你的家",
+      "start": 20.08,
+      "end": 23.39,
+      "prefix": "请把我的歌带回你的",
+      "keyword": "家",
+      "keyword_kind": "home",
+      "keyword_start": 23.059,
+      "reviewed": false
+    },
+    {
+      "id": "line_02",
+      "text": "请把你的微笑留下",
+      "start": 24.54,
+      "end": 26.83,
+      "prefix": "请把你的微笑",
+      "keyword": "留下",
+      "keyword_kind": "keep",
+      "keyword_start": 26.258,
+      "reviewed": false
+    },
+    {
+      "id": "line_03",
+      "text": "请把我的歌带回你的家",
+      "start": 29.0,
+      "end": 32.63,
+      "prefix": "请把我的歌带回你的",
+      "keyword": "家",
+      "keyword_kind": "home",
+      "keyword_start": 32.267,
+      "reviewed": false
+    },
+    {
+      "id": "line_04",
+      "text": "请把你的微笑留下",
+      "start": 33.57,
+      "end": 35.99,
+      "prefix": "请把你的微笑",
+      "keyword": "留下",
+      "keyword_kind": "keep",
+      "keyword_start": 35.385,
+      "reviewed": false
+    },
+    {
+      "id": "line_05",
+      "text": "明天明天这歌声飞遍海角天涯",
+      "start": 38.06,
+      "end": 42.08,
+      "prefix": "明天明天这歌声飞遍",
+      "keyword": "海角天涯",
+      "keyword_kind": "horizon",
+      "keyword_start": 40.843,
+      "reviewed": false
+    },
+    {
+      "id": "line_06",
+      "text": "飞遍海角天涯",
+      "start": 42.65,
+      "end": 45.93,
+      "prefix": "飞遍",
+      "keyword": "海角天涯",
+      "keyword_kind": "horizon",
+      "keyword_start": 43.743,
+      "reviewed": false
+    },
+    {
+      "id": "line_07",
+      "text": "明天明天这微笑将是遍野春花",
+      "start": 47.23,
+      "end": 51.16,
+      "prefix": "明天明天这微笑将是",
+      "keyword": "遍野春花",
+      "keyword_kind": "spring_flower",
+      "keyword_start": 49.951,
+      "reviewed": false
+    },
+    {
+      "id": "line_08",
+      "text": "将是遍野春花",
+      "start": 51.75,
+      "end": 54.44,
+      "prefix": "将是",
+      "keyword": "遍野春花",
+      "keyword_kind": "spring_flower",
+      "keyword_start": 52.647,
+      "reviewed": false
+    },
+    {
+      "id": "line_09",
+      "text": "请把我的歌带回你的家",
+      "start": 56.44,
+      "end": 59.82,
+      "prefix": "请把我的歌带回你的",
+      "keyword": "家",
+      "keyword_kind": "home",
+      "keyword_start": 59.482,
+      "reviewed": false
+    },
+    {
+      "id": "line_10",
+      "text": "请把你的微笑留下",
+      "start": 60.88,
+      "end": 64.01,
+      "prefix": "请把你的微笑",
+      "keyword": "留下",
+      "keyword_kind": "keep",
+      "keyword_start": 63.228,
+      "reviewed": false
+    },
+    {
+      "id": "line_11",
+      "text": "请把我的歌带回你的家",
+      "start": 65.4,
+      "end": 68.86,
+      "prefix": "请把我的歌带回你的",
+      "keyword": "家",
+      "keyword_kind": "home",
+      "keyword_start": 68.514,
+      "reviewed": false
+    },
+    {
+      "id": "line_12",
+      "text": "请把你的微笑留下",
+      "start": 69.94,
+      "end": 73.21,
+      "prefix": "请把你的微笑",
+      "keyword": "留下",
+      "keyword_kind": "keep",
+      "keyword_start": 72.393,
+      "reviewed": false
+    },
+    {
+      "id": "line_13",
+      "text": "明天明天这歌声飞遍海角天涯",
+      "start": 74.5,
+      "end": 78.37,
+      "prefix": "明天明天这歌声飞遍",
+      "keyword": "海角天涯",
+      "keyword_kind": "horizon",
+      "keyword_start": 77.179,
+      "reviewed": false
+    },
+    {
+      "id": "line_14",
+      "text": "飞遍海角天涯",
+      "start": 79.04,
+      "end": 82.19,
+      "prefix": "飞遍",
+      "keyword": "海角天涯",
+      "keyword_kind": "horizon",
+      "keyword_start": 80.09,
+      "reviewed": false
+    },
+    {
+      "id": "line_15",
+      "text": "明天明天这微笑将是遍野春花",
+      "start": 83.58,
+      "end": 87.58,
+      "prefix": "明天明天这微笑将是",
+      "keyword": "遍野春花",
+      "keyword_kind": "spring_flower",
+      "keyword_start": 86.349,
+      "reviewed": false
+    },
+    {
+      "id": "line_16",
+      "text": "将是遍野春花",
+      "start": 88.1,
+      "end": 91.54,
+      "prefix": "将是",
+      "keyword": "遍野春花",
+      "keyword_kind": "spring_flower",
+      "keyword_start": 89.247,
+      "reviewed": false
+    },
+    {
+      "id": "line_17",
+      "text": "请把我的歌带回你的家",
+      "start": 92.89,
+      "end": 96.16,
+      "prefix": "请把我的歌带回你的",
+      "keyword": "家",
+      "keyword_kind": "home",
+      "keyword_start": 95.833,
+      "reviewed": false
+    },
+    {
+      "id": "line_18",
+      "text": "请把你的微笑留下",
+      "start": 97.33,
+      "end": 100.5,
+      "prefix": "请把你的微笑",
+      "keyword": "留下",
+      "keyword_kind": "keep",
+      "keyword_start": 99.707,
+      "reviewed": false
+    },
+    {
+      "id": "line_19",
+      "text": "请把我的歌带回你的家",
+      "start": 101.78,
+      "end": 105.26,
+      "prefix": "请把我的歌带回你的",
+      "keyword": "家",
+      "keyword_kind": "home",
+      "keyword_start": 104.912,
+      "reviewed": false
+    },
+    {
+      "id": "line_20",
+      "text": "请把你的微笑留下",
+      "start": 106.27,
+      "end": 109.61,
+      "prefix": "请把你的微笑",
+      "keyword": "留下",
+      "keyword_kind": "keep",
+      "keyword_start": 108.775,
+      "reviewed": false
+    },
+    {
+      "id": "line_21",
+      "text": "明天明天这歌声飞遍海角天涯",
+      "start": 110.92,
+      "end": 114.84,
+      "prefix": "明天明天这歌声飞遍",
+      "keyword": "海角天涯",
+      "keyword_kind": "horizon",
+      "keyword_start": 113.634,
+      "reviewed": false
+    },
+    {
+      "id": "line_22",
+      "text": "飞遍海角天涯",
+      "start": 115.44,
+      "end": 118.68,
+      "prefix": "飞遍",
+      "keyword": "海角天涯",
+      "keyword_kind": "horizon",
+      "keyword_start": 116.52,
+      "reviewed": false
+    },
+    {
+      "id": "line_23",
+      "text": "明天明天这微笑将是遍野春花",
+      "start": 120.03,
+      "end": 123.93,
+      "prefix": "明天明天这微笑将是",
+      "keyword": "遍野春花",
+      "keyword_kind": "spring_flower",
+      "keyword_start": 122.73,
+      "reviewed": false
+    },
+    {
+      "id": "line_24",
+      "text": "将是遍野春花",
+      "start": 124.52,
+      "end": 127.72,
+      "prefix": "将是",
+      "keyword": "遍野春花",
+      "keyword_kind": "spring_flower",
+      "keyword_start": 125.587,
+      "reviewed": false
+    },
+    {
+      "id": "line_25",
+      "text": "明天明天这歌声飞遍海角天涯",
+      "start": 129.13,
+      "end": 133.49,
+      "prefix": "明天明天这歌声飞遍",
+      "keyword": "海角天涯",
+      "keyword_kind": "horizon",
+      "keyword_start": 132.148,
+      "reviewed": false
+    },
+    {
+      "id": "line_26",
+      "text": "飞遍海角天涯",
+      "start": 133.49,
+      "end": 136.54,
+      "prefix": "飞遍",
+      "keyword": "海角天涯",
+      "keyword_kind": "horizon",
+      "keyword_start": 134.507,
+      "reviewed": false
+    },
+    {
+      "id": "line_27",
+      "text": "明天明天这微笑将是遍野春花",
+      "start": 138.13,
+      "end": 142.1,
+      "prefix": "明天明天这微笑将是",
+      "keyword": "遍野春花",
+      "keyword_kind": "spring_flower",
+      "keyword_start": 140.878,
+      "reviewed": false
+    },
+    {
+      "id": "line_28",
+      "text": "将是遍野春花",
+      "start": 142.63,
+      "end": 145.23,
+      "prefix": "将是",
+      "keyword": "遍野春花",
+      "keyword_kind": "spring_flower",
+      "keyword_start": 143.497,
+      "reviewed": false
+    }
+  ]
+}

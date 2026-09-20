@@ -1,0 +1,14 @@
+[project]
+name = "song-and-smile-lyric-garden"
+version = "0.1.0"
+description = "A Manim lyric video driven by a versioned LRC timeline."
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "fonttools>=4.65",
+    "faster-whisper>=1.2.1",
+    "manim==0.21.0",
+]
+
+[tool.uv]
+package = false
