@@ -12,8 +12,8 @@ and semantic keyword colors on a clean dark background.
 - Music: Gu Jianfen
 - Performance: Crescent Choir
 
-The maintainer has confirmed that the audio and lyric timeline shipped in this repository may be publicly redistributed.
-Keep the attribution above and record the underlying license or permission source in [ASSET_NOTICE.md](ASSET_NOTICE.md) (**still to be added**).
+The audio and lyrics were obtained through QQ Music, **without a redistribution license from the rights holders**, and are
+included for personal study and appreciation only; all rights stay with them. Keep the attribution above and the assets will be removed if a rights holder objects — see [ASSET_NOTICE.md](ASSET_NOTICE.md).
 
 ## ⚙️ Setup
 

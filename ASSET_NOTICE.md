@@ -14,6 +14,6 @@
 - 作曲：谷建芬 / Music: Gu Jianfen
 - 演唱：新月合唱团 / Performance: Crescent Choir
 
-维护者已声明本仓库中的素材可公开再分发；准确的授权或许可来源仍待补充。 / The maintainer has stated that the included assets may be publicly redistributed; the exact authorization or license source is still to be added.
+音频与歌词经 QQ 音乐获取，**未获得著作权人的再分发授权**，仅作个人学习与欣赏用途；著作权及邻接权归原权利人所有。 / The audio and lyrics were obtained through QQ Music **without a redistribution license from the rights holders**, and are included for personal study and appreciation only; copyright and related rights remain with the rights holders.
 
-补充来源后，下游使用者即可独立核验媒体权利。 / Once the source is recorded, downstream users can verify the media rights independently.
+如权利人提出异议，本仓库将立即移除相关素材；如需再利用这些素材，请自行取得授权。 / The assets will be removed promptly if a rights holder objects; obtain your own license before reusing them.
