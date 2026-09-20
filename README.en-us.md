@@ -1,11 +1,10 @@
-[简体中文](README.md) | **English**
-
----
-
 # 🎬 Song and Smile Lyric Garden
 
 A 9:16 Manim lyric video for `Song and Smile`: LXGW WenKai, `Write` animation,
 and semantic keyword colors on a clean dark background.
+
+> **[📖 English](README.en-us.md)**
+> **[📖 简体中文(大陆)](README.md)**
 
 ## ⚖️ Assets and attribution
 
