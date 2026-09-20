@@ -6,6 +6,9 @@
 > **[📖 English](README.en-us.md)**
 > **[📖 简体中文(大陆)](README.md)**
 
+![本地播放截图](docs/images/preview/%E6%9C%AC%E5%9C%B0%E6%92%AD%E6%94%BE%E6%88%AA%E5%9B%BE.png)
+*本地播放效果截图*
+
 ## ⚖️ 素材与署名
 
 - 作词：王健

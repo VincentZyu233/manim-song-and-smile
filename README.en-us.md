@@ -6,6 +6,9 @@ and semantic keyword colors on a clean dark background.
 > **[📖 English](README.en-us.md)**
 > **[📖 简体中文(大陆)](README.md)**
 
+![Local playback screenshot](docs/images/preview/%E6%9C%AC%E5%9C%B0%E6%92%AD%E6%94%BE%E6%88%AA%E5%9B%BE.png)
+*Screenshot of local playback*
+
 ## ⚖️ Assets and attribution
 
 - Lyrics: Wang Jian
