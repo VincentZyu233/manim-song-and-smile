@@ -48,6 +48,17 @@ uv run python scripts/transcribe.py --model large-v3 --device auto
 RTX 3060 12 GB 可以用 CUDA 跑 `large-v3`，首次运行会下载模型。对音乐而言，应该把
 候选转写与 LRC 相互对照，而不是直接套用它的时间戳。
 
+## 🎚️ 可视化数据
+
+顶部的频谱柱与包络波形都来自真实音频，数据由 FFmpeg 解码后计算并入库：
+
+```powershell
+uv run python scripts/extract_audio.py
+```
+
+`assets/audio/waveform.json` 是整首歌的 min/max 包络（100 点/秒）；`assets/audio/spectrum.json`
+是逐帧 32 频段频谱（30 帧/秒，base64 uint8）。音频更新后需要重跑一次。
+
 ## 🎞️ 渲染
 
 用 `--path` 传入本机的霞鹜文楷 Medium TTF，用 `--work` 指定临时目录。字体从文件
@@ -59,8 +70,9 @@ uv run python scripts/render.py --quality final --path "<LXGWWenKai-Medium.ttf>"
 uv run python scripts/validate.py output/song-and-smile.mp4
 ```
 
-预览会有意截断到指定秒数；`final` 渲染完整的 161 秒场景，并用 FFmpeg 把原始 MP3
-与画面合流。
+用 `--waveform` 选择顶部可视化：`bars`（随响度跳动的真实频谱柱）、`static`（整曲包络 + 进度染色）、
+`scroll`（滚动波形）。预览会有意截断到指定秒数；`final` 渲染完整的 161 秒场景，并用 FFmpeg 把
+原始 MP3 与画面合流。
 
 ## 🎨 设计规则
 
@@ -71,8 +83,10 @@ uv run python scripts/validate.py output/song-and-smile.mp4
 - `song` / `horizon`（歌声 / 海角天涯）：天青
 - `spring flower`（遍野春花）：叶绿
 
-标题与歌词都用 `Write` 书写。顶部波形与底部植物线稿已移除，片尾微笑弧线保留
-`Create`。
+标题与歌词都用 `Write` 书写；底部植物线稿不再恢复，片尾微笑弧线保留 `Create`。
+
+顶部是随音乐跳动的真实频谱柱（或包络波形），底部是进度条与 `分:秒.十分位 / 总时长` 时钟；
+两者都读渲染时钟，因此贯穿全片与画面严格同步。片尾标题与微笑弧线在最后 `OUTRO_FADE`（3 s）内淡出。
 
 每句句首在 cue 时间前 `LEAD_IN`（0.30 s）起笔，上一句的淡出在此之前结束，因此不再
 等待前一句淡出。染色词在记录的 `keyword_start` 前 `KEYWORD_LEAD`（1 s）起笔，但仍在
