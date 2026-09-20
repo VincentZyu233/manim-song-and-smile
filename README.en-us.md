@@ -85,8 +85,9 @@ Lyrics are warm white by default. Stable semantic colors make ending words part 
 
 Titles and lyric phrases are drawn with `Write`; the bottom plant line art stays removed and the closing smile arc keeps `Create`.
 
-The top is a reacting spectrum or envelope visualisation; below it sit the whole song envelope, the progress bar and a `m:ss.d / total` clock, and all of them read the render clock so they stay in sync for the whole video.
-The closing title and smile arc fade out over `OUTRO_FADE` (3 s) and stop on the last frame.
+The top is a reacting spectrum that jumps with the music, each bar carrying a slowly falling peak hold cap; below it sit the
+whole song envelope (played part coloured, amber dot on the playhead), the progress bar and a `m:ss.d / total` clock. All of
+them read the render clock, so they stay in sync and keep drifting even through sustained notes. The closing title and smile arc fade out over `OUTRO_FADE` (3 s) and stop on the last frame.
 
 A phrase head starts drawing `LEAD_IN` (0.30 s) before its cue start and the outgoing phrase has already
 finished fading out, so a line no longer waits for the previous fade. A colored ending word starts drawing
