@@ -58,10 +58,9 @@ HUD_BOTTOM = -6.95      # centre of the progress bar
 HUD_BAR_HEIGHT = .09
 BOTTOM_WAVE = -6.15     # centre of the whole song envelope below the top visualisation
 BOTTOM_WAVE_HEIGHT = .9
-BUCKET_FALL = 1.7       # per second fall back of a spectrum bucket
-BUCKET_PEAK_FALL = .5   # per second fall of the peak-hold cap
-BUCKET_CAP_HEIGHT = .05
-STATIC_GLOW = 12        # columns of the sweeping highlight on the static envelope
+BUCKET_FALL = 1.4       # per second fall back of a spectrum bucket
+BUCKET_PEAK_FALL = .22  # per second fall of the peak-hold cap, so the caps keep drifting
+BUCKET_CAP_HEIGHT = .07
 BOTTOM_MODE = os.environ.get("LYRIC_GARDEN_BOTTOM", "static")
 if BOTTOM_MODE not in ("static", "none"):
     raise RuntimeError(f"Unknown LYRIC_GARDEN_BOTTOM {BOTTOM_MODE}")
@@ -133,40 +132,53 @@ class LyricGarden(Scene):
         buckets.set_color_by_gradient(PALETTE["song"], PALETTE["home"])
         caps = VGroup(*[Rectangle(width=step * .62, height=BUCKET_CAP_HEIGHT, stroke_width=0, fill_color=PALETTE["neutral"], fill_opacity=.7) for _ in range(bands)])
         peaks = np.full(bands, .02)
-        def bounce(_: VGroup, dt: float) -> None:
+        def bounce(_: VGroup) -> None:
             row = min(int(self.elapsed() * asset["rate"]), len(levels) - 1)
-            heights[:] = np.maximum(levels[row] * HUD_TOP_HEIGHT, heights - BUCKET_FALL * dt)
-            peaks[:] = np.maximum(heights, peaks - BUCKET_PEAK_FALL * dt)
-            for bucket, cap, centre, height, peak in zip(buckets, caps, centres, heights, peaks):
+            heights[:] = np.maximum(levels[row] * HUD_TOP_HEIGHT, heights - BUCKET_FALL / config.frame_rate)
+            for bucket, centre, height in zip(buckets, centres, heights):
                 bucket.stretch_to_fit_height(float(height))
                 bucket.move_to([centre, floor + float(height) / 2, 0])
-                cap.move_to([centre, floor + float(peak), 0])
         buckets.add_updater(bounce)
+        def trail(_: VGroup) -> None:
+            peaks[:] = np.maximum(heights, peaks - BUCKET_PEAK_FALL / config.frame_rate)
+            for cap, centre, peak in zip(caps, centres, peaks):
+                cap.move_to([centre, floor + float(peak), 0])
+        caps.add_updater(trail)
         return VGroup(buckets, caps)
 
-    def static_waveform(self, columns: int = 480, centre: float = HUD_TOP, height: float = HUD_TOP_HEIGHT) -> VGroup:
+    def static_waveform(self, columns: int = 240, centre: float = HUD_TOP, height: float = HUD_TOP_HEIGHT) -> VGroup:
         asset = load_asset(WAVEFORM_PATH)
         low, high = self.waveform_columns(asset, 0.0, self.limit, columns)
         scale = height / 2 / max(asset["peak"], 1e-6)
         step = HUD_WIDTH / columns
-        lines = VGroup(*[
-            Line([-HUD_WIDTH / 2 + (index + .5) * step, centre + low[index] * scale, 0],
-                 [-HUD_WIDTH / 2 + (index + .5) * step, centre + high[index] * scale, 0], stroke_width=2.5, color="#2A3B4D")
-            for index in range(columns)
-        ])
-        played = 0
+        def envelope(first: int, last: int, color: str, opacity: float) -> VMobject:
+            """One filled band instead of one mobject per column, to keep renders fast."""
+            top = [[-HUD_WIDTH / 2 + (index + .5) * step, centre + high[index] * scale, 0] for index in range(first, last)]
+            bottom = [[-HUD_WIDTH / 2 + (index + .5) * step, centre + low[index] * scale, 0] for index in reversed(range(first, last))]
+            shape = VMobject(stroke_width=0, fill_color=color, fill_opacity=opacity)
+            return shape.set_points_as_corners(top + bottom + [top[0]])
+        full = envelope(0, columns, "#2A3B4D", .8)
+        played = VMobject()
+        state = {"reached": 0}
         def reveal(_: VGroup) -> None:
-            nonlocal played
             reached = min(columns, int(self.elapsed() / max(self.limit, 1e-6) * columns))
-            while played < reached:
-                lines[played].set_stroke(color=PALETTE["song"])
-                played += 1
-            for index in range(max(0, reached - STATIC_GLOW), reached):
-                lines[index].set_stroke(color=PALETTE["home"])
-            for index in range(max(0, reached - STATIC_GLOW - 3), max(0, reached - STATIC_GLOW)):
-                lines[index].set_stroke(color=PALETTE["song"])
-        lines.add_updater(reveal)
-        return VGroup(lines, self.playhead(centre, height))
+            if reached > 1 and reached != state["reached"]:
+                state["reached"] = reached
+                played.become(envelope(0, reached, PALETTE["song"], .8))
+        VGroup(full, played).add_updater(reveal)
+        return VGroup(full, played, self.playhead(centre, height), self.level_dot(asset, centre, height))
+
+    def level_dot(self, asset: dict, centre: float, height: float) -> Dot:
+        """Amber dot riding the real envelope at the playhead, so the band is never still."""
+        scale = height / 2 / max(asset["peak"], 1e-6)
+        dot = Dot(radius=.08, color=PALETTE["home"])
+        def ride(mobject: Dot) -> None:
+            now = self.elapsed()
+            row = min(len(asset["max"]) - 1, max(0, int(now * asset["rate"])))
+            level = (asset["max"][row] + asset["min"][row]) / 2 * scale
+            mobject.move_to([-HUD_WIDTH / 2 + HUD_WIDTH * min(now / max(self.limit, 1e-6), 1), centre + level, 0])
+        dot.add_updater(ride)
+        return dot
 
     def scroll_waveform(self, columns: int = 312, span: float = 5.2) -> VGroup:
         asset = load_asset(WAVEFORM_PATH)

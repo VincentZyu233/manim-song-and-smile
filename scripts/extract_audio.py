@@ -20,7 +20,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_AUDIO = ROOT / "music" / "歌声与微笑.mp3"
 DEFAULT_OUTPUT = ROOT / "assets" / "audio"
-SPECTRUM_FLOOR_DB = -54.0
+SPECTRUM_FLOOR_DB = -42.0
 
 
 def decode(audio: Path, sample_rate: int) -> np.ndarray:
