@@ -2,12 +2,12 @@
 
 ---
 
-# 歌声与微笑 · Manim 歌词视频
+# 🎬 歌声与微笑 · Manim 歌词视频
 
 用 Manim 制作的 9:16 竖屏歌词视频《歌声与微笑》：霞鹜文楷、`Write` 书写动画，
 以及语义化关键词配色，深色纯色背景。
 
-## 素材与署名
+## ⚖️ 素材与署名
 
 - 作词：王健
 - 作曲：谷建芬
@@ -16,7 +16,7 @@
 仓库维护者已确认：仓库中附带的音频与歌词时间轴可公开再分发。请保留以上署名，
 并把底层许可或授权来源记录到 [ASSET_NOTICE.md](ASSET_NOTICE.md)（**目前仍待补充**）。
 
-## 环境准备
+## ⚙️ 环境准备
 
 需要 Python 3.12 或 3.13、FFmpeg，以及一款中文字体。下面的命令在下载 Python 包或
 Whisper 模型时走本机 HTTP 代理。
@@ -27,7 +27,7 @@ $env:HTTPS_PROXY = "http://127.0.0.1:7890"
 uv sync
 ```
 
-## 构建时间轴
+## ⏱️ 构建时间轴
 
 源 LRC 位于 `music/`。只要 LRC 有改动就重新导入：
 
@@ -49,7 +49,7 @@ uv run python scripts/transcribe.py --model large-v3 --device auto
 RTX 3060 12 GB 可以用 CUDA 跑 `large-v3`，首次运行会下载模型。对音乐而言，应该把
 候选转写与 LRC 相互对照，而不是直接套用它的时间戳。
 
-## 渲染
+## 🎞️ 渲染
 
 用 `--path` 传入本机的霞鹜文楷 Medium TTF，用 `--work` 指定临时目录。字体从文件
 注册，不使用系统字体回退。个人路径只写在被忽略的 AGENTS.local.md 里。
@@ -63,7 +63,7 @@ uv run python scripts/validate.py output/song-and-smile.mp4
 预览会有意截断到指定秒数；`final` 渲染完整的 161 秒场景，并用 FFmpeg 把原始 MP3
 与画面合流。
 
-## 设计规则
+## 🎨 设计规则
 
 歌词默认暖白色。固定的语义配色让句尾词成为画面的一部分，而不是装饰性的卡拉 OK 高亮：
 
@@ -81,7 +81,7 @@ uv run python scripts/validate.py output/song-and-smile.mp4
 不再贴着唱字"啪"地出现，又不改变写完的时刻。这些只是动画预滚，每个 cue 何时开始
 始终由时间轴决定。
 
-## 许可
+## 📄 许可
 
 源代码以 [MIT 许可](LICENSE)发布。仓库中的音乐、歌词以及渲染出的视频**不在 MIT
 覆盖范围内**，其权利见 [ASSET_NOTICE.md](ASSET_NOTICE.md)。

@@ -2,12 +2,12 @@
 
 ---
 
-# Song and Smile Lyric Garden
+# 🎬 Song and Smile Lyric Garden
 
 A 9:16 Manim lyric video for `Song and Smile`: LXGW WenKai, `Write` animation,
 and semantic keyword colors on a clean dark background.
 
-## Assets and attribution
+## ⚖️ Assets and attribution
 
 - Lyrics: Wang Jian
 - Music: Gu Jianfen
@@ -16,7 +16,7 @@ and semantic keyword colors on a clean dark background.
 The maintainer has confirmed that the audio and lyric timeline shipped in this repository may be publicly redistributed.
 Keep the attribution above and record the underlying license or permission source in [ASSET_NOTICE.md](ASSET_NOTICE.md) (**still to be added**).
 
-## Setup
+## ⚙️ Setup
 
 Requires Python 3.12 or 3.13, FFmpeg, and a CJK font. The commands below go through a local
 HTTP proxy when downloading Python packages or Whisper models.
@@ -27,7 +27,7 @@ $env:HTTPS_PROXY = "http://127.0.0.1:7890"
 uv sync
 ```
 
-## Build the timeline
+## ⏱️ Build the timeline
 
 The source LRC lives in `music/`. Re-import it whenever the LRC changes:
 
@@ -49,7 +49,7 @@ uv run python scripts/transcribe.py --model large-v3 --device auto
 An RTX 3060 12 GB can run `large-v3` with CUDA; the first run downloads the model. For music, compare the
 candidate transcript with the LRC instead of applying its timestamps blindly.
 
-## Render
+## 🎞️ Render
 
 Pass a local LXGW WenKai Medium TTF via `--path` and a scratch directory via `--work`. The font is
 registered from the file, with no system-font fallback. Personal paths belong only in the ignored AGENTS.local.md.
@@ -63,7 +63,7 @@ uv run python scripts/validate.py output/song-and-smile.mp4
 A preview is intentionally cut to the requested number of seconds; `final` renders the full 161-second
 scene and uses FFmpeg to mux the original MP3 with the video.
 
-## Design rules
+## 🎨 Design rules
 
 Lyrics are warm white by default. Stable semantic colors make ending words part of the scene rather than decorative karaoke highlighting:
 
@@ -81,7 +81,7 @@ finished fading out, so a line no longer waits for the previous fade. A colored 
 (0.85 s) — exactly where it finished before — so the pen stroke is visible instead of snapping on at the
 sung syllable, without changing when the word is complete. These are animation pre-rolls only: the timeline still decides when every cue may start.
 
-## License
+## 📄 License
 
 Source code is released under the [MIT license](LICENSE). The music, lyrics and any rendered video in
 this repository are **not** covered by MIT; their rights are described in [ASSET_NOTICE.md](ASSET_NOTICE.md).
