@@ -9,6 +9,9 @@ and semantic keyword colors on a clean dark background.
 ![Local playback screenshot](docs/images/preview/%E6%9C%AC%E5%9C%B0%E6%92%AD%E6%94%BE%E6%88%AA%E5%9B%BE.png)
 *Screenshot of local playback*
 
+![Bilibili mobile playback](docs/images/preview/%E5%9C%A8%E6%89%8B%E6%9C%BAB%E7%AB%99%E7%AB%96%E5%B1%8F%E6%92%AD%E6%94%BE%E7%9A%84%E6%95%88%E6%9E%9C%E6%8D%8F.png)
+*Playback on a portrait phone in the Bilibili app*
+
 ## ⚖️ Assets and attribution
 
 - Lyrics: Wang Jian
@@ -76,6 +79,7 @@ uv run python scripts/validate.py output/song-and-smile.mp4
 `--waveform` picks the top visualisation (`bars` reacting spectrum / `static` whole song envelope / `scroll` scrolling
 envelope), `--bottom` adds the whole song envelope above the progress bar and `--fps` sets the frame rate (default 60).
 A preview is cut to the requested seconds; `final` renders the full 161-second scene and muxes the original MP3.
+`--bottom-lift` (4.6 by default) raises the bottom envelope, progress bar and clock clear of a portrait phone player's bottom overlay.
 
 ## 🎨 Design rules
 
@@ -87,6 +91,7 @@ Lyrics are warm white by default. Stable semantic colors make ending words part 
 - `spring flower`: leaf green
 
 Titles and lyric phrases are drawn with `Write`; the bottom plant line art stays removed and the closing smile arc keeps `Create`.
+Both the opening title block and the lyric block sit on the golden section of the frame (top gap : bottom gap = 0.618 : 1), and the bottom HUD is raised too, so a portrait phone player's progress bar and comment box cannot cover them.
 
 The top is a reacting spectrum that jumps with the music, each bar carrying a slowly falling peak hold cap; below it sit the
 whole song envelope (played part coloured, amber dot on the playhead), the progress bar and a `m:ss.d / total` clock. All of

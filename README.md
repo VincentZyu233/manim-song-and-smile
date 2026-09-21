@@ -9,6 +9,9 @@
 ![本地播放截图](docs/images/preview/%E6%9C%AC%E5%9C%B0%E6%92%AD%E6%94%BE%E6%88%AA%E5%9B%BE.png)
 *本地播放效果截图*
 
+![手机 B 站竖屏播放效果](docs/images/preview/%E5%9C%A8%E6%89%8B%E6%9C%BAB%E7%AB%99%E7%AB%96%E5%B1%8F%E6%92%AD%E6%94%BE%E7%9A%84%E6%95%88%E6%9E%9C%E6%8D%8F.png)
+*手机 B 站竖屏播放效果截图*
+
 ## ⚖️ 素材与署名
 
 - 作词：王健
@@ -76,6 +79,7 @@ uv run python scripts/validate.py output/song-and-smile.mp4
 用 `--waveform` 选择顶部可视化（`bars` 跳动频谱柱 / `static` 整曲包络 + 进度染色 / `scroll` 滚动波形），
 `--bottom` 在进度条上方再加一条整曲包络，`--fps` 指定帧率（默认 60）。预览会截断到指定秒数；
 `final` 渲染完整的 161 秒场景，并用 FFmpeg 把原始 MP3 与画面合流。
+`--bottom-lift`（默认 4.6）把底部包络、进度条与时钟整体上抬，避开手机竖屏播放器的底部覆盖层。
 
 ## 🎨 设计规则
 
@@ -87,6 +91,7 @@ uv run python scripts/validate.py output/song-and-smile.mp4
 - `spring flower`（遍野春花）：叶绿
 
 标题与歌词都用 `Write` 书写；底部植物线稿不再恢复，片尾微笑弧线保留 `Create`。
+开场标题整块与歌词中心都落在画面的黄金分割上（上留白 : 下留白 = 0.618 : 1），底部 HUD 也默认上抬，让手机竖屏播放器的进度条与弹幕框盖不住它们。
 
 顶部是随音乐跳动的真实频谱柱（每个柱顶带一条缓慢下落的峰值残留帽），其下是整曲包络（已播放部分染色、
 琥珀亮点跟随播放头）、进度条与 `分:秒.十分位 / 总时长` 时钟；它们都读渲染时钟，贯穿全片并与画面严格同步，

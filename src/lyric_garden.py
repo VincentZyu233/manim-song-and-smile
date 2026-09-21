@@ -58,6 +58,10 @@ HUD_BOTTOM = -6.95      # centre of the progress bar
 HUD_BAR_HEIGHT = .09
 BOTTOM_WAVE = -6.15     # centre of the whole song envelope below the top visualisation
 BOTTOM_WAVE_HEIGHT = .9
+# A portrait phone player covers the bottom of the frame with its own chrome, so
+# the whole bottom stack (envelope, progress bar and clock) is lifted clear of
+# it. --bottom-lift tunes the amount without moving the design coordinates.
+BOTTOM_LIFT = max(0.0, float(os.environ.get("LYRIC_GARDEN_BOTTOM_LIFT", "4.6")))
 BUCKET_FALL = 1.4       # per second fall back of a spectrum bucket
 BUCKET_MIN_HEIGHT = .02  # never collapse a bucket: a zero height breaks the next rescale
 BUCKET_PEAK_FALL = .22  # per second fall of the peak-hold cap, so the caps keep drifting
@@ -65,6 +69,12 @@ BUCKET_CAP_HEIGHT = .07
 BOTTOM_MODE = os.environ.get("LYRIC_GARDEN_BOTTOM", "static")
 if BOTTOM_MODE not in ("static", "none"):
     raise RuntimeError(f"Unknown LYRIC_GARDEN_BOTTOM {BOTTOM_MODE}")
+
+# The lyric block sits on the golden section of the frame: the gap above it is
+# 0.618 of the gap below, so a portrait phone leaves the text visually centred.
+LYRIC_CENTRE = config.frame_height / 2 - config.frame_height * .618 / 1.618
+# The opening title block shares that golden line, so it reads as centred too.
+TITLE_CENTRE = LYRIC_CENTRE
 
 
 def load_asset(path: Path) -> dict:
@@ -217,18 +227,19 @@ class LyricGarden(Scene):
         return VGroup(pieces(elapsed), sprites[" / "].copy(), pieces(total)).arrange(buff=.12)
 
     def progress_bar(self) -> VGroup:
-        track = Rectangle(width=HUD_WIDTH, height=HUD_BAR_HEIGHT, stroke_width=0, fill_color="#223242", fill_opacity=1).move_to([0, HUD_BOTTOM, 0])
-        fill = Rectangle(width=.02, height=HUD_BAR_HEIGHT, stroke_width=0, fill_color=PALETTE["home"], fill_opacity=1).move_to([-HUD_WIDTH / 2 + .01, HUD_BOTTOM, 0])
-        head = Dot(radius=.075, color=PALETTE["home"]).move_to([-HUD_WIDTH / 2, HUD_BOTTOM, 0])
+        bottom = HUD_BOTTOM + BOTTOM_LIFT
+        track = Rectangle(width=HUD_WIDTH, height=HUD_BAR_HEIGHT, stroke_width=0, fill_color="#223242", fill_opacity=1).move_to([0, bottom, 0])
+        fill = Rectangle(width=.02, height=HUD_BAR_HEIGHT, stroke_width=0, fill_color=PALETTE["home"], fill_opacity=1).move_to([-HUD_WIDTH / 2 + .01, bottom, 0])
+        head = Dot(radius=.075, color=PALETTE["home"]).move_to([-HUD_WIDTH / 2, bottom, 0])
         def grow(_: Rectangle) -> None:
             width = max(.02, HUD_WIDTH * min(self.elapsed() / max(self.limit, 1e-6), 1))
             fill.stretch_to_fit_width(width)
-            fill.move_to([-HUD_WIDTH / 2 + width / 2, HUD_BOTTOM, 0])
-            head.move_to([-HUD_WIDTH / 2 + width, HUD_BOTTOM, 0])
+            fill.move_to([-HUD_WIDTH / 2 + width / 2, bottom, 0])
+            head.move_to([-HUD_WIDTH / 2 + width, bottom, 0])
         fill.add_updater(grow)
         sprites = {character: Text(character, font=FONT, font_size=26, color="#9CAEBB") for character in "0123456789:."}
         sprites[" / "] = Text(" / ", font=FONT, font_size=26, color="#9CAEBB")
-        clock = self.clock_group(sprites, self.stamp(0.0)).move_to([0, HUD_BOTTOM - .40, 0])
+        clock = self.clock_group(sprites, self.stamp(0.0)).move_to([0, bottom - .40, 0])
         def tick(mobject: VGroup) -> None:
             stamp = self.stamp(self.elapsed())
             if stamp != self.hud_stamp:
@@ -239,7 +250,7 @@ class LyricGarden(Scene):
 
     def hud(self) -> VGroup:
         top = {"bars": self.spectrum_buckets, "static": self.static_waveform, "scroll": self.scroll_waveform}[WAVEFORM_MODE]()
-        bottom = self.static_waveform(640, BOTTOM_WAVE, BOTTOM_WAVE_HEIGHT) if BOTTOM_MODE == "static" else VGroup()
+        bottom = self.static_waveform(640, BOTTOM_WAVE + BOTTOM_LIFT, BOTTOM_WAVE_HEIGHT) if BOTTOM_MODE == "static" else VGroup()
         return VGroup(top, bottom, self.progress_bar())
 
 
@@ -247,13 +258,14 @@ class LyricGarden(Scene):
         prefix = Text(cue["prefix"], font=FONT, font_size=50, color=PALETTE["neutral"])
         keyword = Text(cue["keyword"], font=FONT, font_size=52, color=PALETTE[cue["keyword_kind"]]) if cue["keyword"] else None
         group = VGroup(prefix, *([keyword] if keyword else [])).arrange(buff=0.06)
-        group.scale_to_fit_width(7.75).move_to([0, 1.38, 0])
+        group.scale_to_fit_width(7.75).move_to([0, LYRIC_CENTRE, 0])
         return group, prefix, keyword
 
     def title_sequence(self) -> None:
-        title = Text(self.timeline["metadata"]["title"], font=FONT, font_size=64, color=PALETTE["neutral"]).move_to([0, .4, 0])
+        title = Text(self.timeline["metadata"]["title"], font=FONT, font_size=64, color=PALETTE["neutral"])
         artist = Text(self.timeline["metadata"]["artist"], font=FONT, font_size=30, color="#9CAEBB").next_to(title, DOWN, buff=.26)
         credit = Text(f"词：{self.timeline['metadata']['lyricist']}   曲：{self.timeline['metadata']['composer']}", font=FONT, font_size=27, color="#9CAEBB").next_to(artist, DOWN, buff=.18)
+        VGroup(title, artist, credit).move_to([0, TITLE_CENTRE, 0])
         self.wait_until(2.2)
         self.play_timed(Write(title), Write(artist), Write(credit), run_time=2.0)
         self.wait_until(max(5.2, self.timeline["intro_end"] - 1.15))
